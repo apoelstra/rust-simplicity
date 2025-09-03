@@ -77,7 +77,7 @@ fn main() {
             [
                 "bitcoin/exec.c",
                 "bitcoin/primitive.c",
-                "bitcoin/checkSigHashAllTx1.c",
+                // "bitcoin/checkSigHashAllTx1.c", // no sighashall test
             ]
             .into_iter()
             .map(|x| simplicity_path.join(x)),
@@ -115,11 +115,13 @@ fn main() {
         build.include("wasm-sysroot");
     }
 
-    let mut _bitcoin_build = build.clone();
+    let mut bitcoin_build = build.clone();
     let mut elements_build = build;
 
     // Bitcoin build
-    // TODO
+    bitcoin_build
+        .files(bitcoin_files)
+        .compile("BitcoinSimplicity");
 
     // Elements build
     elements_build

@@ -25,8 +25,9 @@ if test -n "$(git status --porcelain)"; then
     echo "WARNING: libsimplicity repo is not clean"
 fi
 
-cabal build -j8
-cabal exec GenRustJets
+#cabal build -j8
+#cabal exec GenRustJets
+/home/apoelstra/code/BlockstreamResearch/Simplicity/pr-review/result/bin/GenRustJets
 
 cd "$RUST_DIR"
 

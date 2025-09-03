@@ -9,7 +9,8 @@ use crate::analysis::Cost;
 use hashes::sha256::Midstate;
 use simplicity_sys::CFrameItem;
 use std::io::Write;
-use std::{fmt, str};
+use std::{borrow::Borrow, fmt, str};
+use crate::jet::core::CoreEnv;
 
 /// The Core jet family.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
@@ -760,11 +761,14 @@ impl Core {
 
 impl Jet for Core {
 
-    type Environment = ();
-    type CJetEnvironment = ();
+    type Transaction = core::convert::Infallible;
+    type Environment<T> = CoreEnv<T> where T: Borrow<Self::Transaction>;
+    type CJetEnvironment = CoreEnv<Self::Transaction>;
 
-    fn c_jet_env(env: &Self::Environment) -> &Self::CJetEnvironment {
-        env
+    fn c_jet_env<T>(_: &Self::Environment<T>) -> &Self::CJetEnvironment
+        where T: Borrow<Self::Transaction>
+    {
+        &CoreEnv::EMPTY
     }
 
     fn cmr(&self) -> Cmr {

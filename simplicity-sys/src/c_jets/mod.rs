@@ -16,9 +16,6 @@ pub use c_env::{bitcoin, elements};
 pub use c_frame::{byte_width, uword_width};
 pub use frame_ffi::CFrameItem;
 
-// The bindings use elements_ffi instead of jets_ffi.
-pub use jets_ffi as elements_ffi;
-
 #[cfg(feature = "test-utils")]
 pub mod exec_ffi;
 

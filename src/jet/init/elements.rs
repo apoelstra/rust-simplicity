@@ -9,9 +9,9 @@ use crate::analysis::Cost;
 use hashes::sha256::Midstate;
 use simplicity_sys::CFrameItem;
 use std::io::Write;
-use std::{fmt, str};
+use std::{borrow::Borrow, fmt, str};
 use crate::jet::elements::ElementsEnv;
-use simplicity_sys::CElementsTxEnv;
+use simplicity_sys::elements::CTxEnv;
 
 /// The Elements jet family.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
@@ -968,10 +968,13 @@ impl Elements {
 
 impl Jet for Elements {
 
-    type Environment = ElementsEnv<std::sync::Arc<elements::Transaction>>;
-    type CJetEnvironment = CElementsTxEnv;
+    type Transaction = elements::Transaction;
+    type Environment<T> = ElementsEnv<T> where T: Borrow<Self::Transaction>;
+    type CJetEnvironment = CTxEnv;
 
-    fn c_jet_env(env: &Self::Environment) -> &Self::CJetEnvironment {
+    fn c_jet_env<T>(env: &Self::Environment<T>) -> &Self::CJetEnvironment
+        where T: Borrow<Self::Transaction>
+    {
         env.c_tx_env()
     }
 

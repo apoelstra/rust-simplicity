@@ -1,7 +1,9 @@
 /* This file has been automatically generated. */
 
 use crate::ffi::c_void;
-use crate::{CElementsTxEnv, CFrameItem};
+use crate::bitcoin;
+use crate::elements;
+use crate::CFrameItem;
 
 extern "C" {
     #[link_name = "rustsimplicity_0_6_c_add_16"]
@@ -30,26 +32,34 @@ extern "C" {
     pub fn and_64(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_and_8"]
     pub fn and_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_annex_hash"]
+    pub fn bitcoin_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_annex_hash"]
-    pub fn annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_asset_amount_hash"]
-    pub fn asset_amount_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn asset_amount_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_bip_0340_verify"]
     pub fn bip_0340_verify(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_build_tapbranch"]
+    pub fn bitcoin_build_tapbranch(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_build_tapbranch"]
-    pub fn build_tapbranch(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn build_tapbranch(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_build_tapleaf_simplicity"]
+    pub fn bitcoin_build_tapleaf_simplicity(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_build_tapleaf_simplicity"]
-    pub fn build_tapleaf_simplicity(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn build_tapleaf_simplicity(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_build_taptweak"]
+    pub fn bitcoin_build_taptweak(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_build_taptweak"]
-    pub fn build_taptweak(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn build_taptweak(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_calculate_asset"]
-    pub fn calculate_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn calculate_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_calculate_confidential_token"]
-    pub fn calculate_confidential_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn calculate_confidential_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_calculate_explicit_token"]
-    pub fn calculate_explicit_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn calculate_explicit_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_calculate_issuance_entropy"]
-    pub fn calculate_issuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn calculate_issuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_ch_1"]
     pub fn ch_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_ch_16"]
@@ -60,14 +70,22 @@ extern "C" {
     pub fn ch_64(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_ch_8"]
     pub fn ch_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_check_lock_distance"]
+    pub fn bitcoin_check_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_check_lock_distance"]
-    pub fn check_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn check_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_check_lock_duration"]
+    pub fn bitcoin_check_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_check_lock_duration"]
-    pub fn check_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn check_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_check_lock_height"]
+    pub fn bitcoin_check_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_check_lock_height"]
-    pub fn check_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn check_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_check_lock_time"]
+    pub fn bitcoin_check_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_check_lock_time"]
-    pub fn check_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn check_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_check_sig_verify"]
     pub fn check_sig_verify(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_complement_1"]
@@ -81,37 +99,51 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_complement_8"]
     pub fn complement_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_amount"]
-    pub fn current_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_annex_hash"]
+    pub fn bitcoin_current_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_annex_hash"]
-    pub fn current_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_asset"]
-    pub fn current_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_index"]
+    pub fn bitcoin_current_index(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_index"]
-    pub fn current_index(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_index(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_issuance_asset_amount"]
-    pub fn current_issuance_asset_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_issuance_asset_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_issuance_asset_proof"]
-    pub fn current_issuance_asset_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_issuance_asset_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_issuance_token_amount"]
-    pub fn current_issuance_token_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_issuance_token_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_issuance_token_proof"]
-    pub fn current_issuance_token_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_issuance_token_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_new_issuance_contract"]
-    pub fn current_new_issuance_contract(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_new_issuance_contract(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_pegin"]
-    pub fn current_pegin(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_pegin(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_prev_outpoint"]
+    pub fn bitcoin_current_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_prev_outpoint"]
-    pub fn current_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_reissuance_blinding"]
-    pub fn current_reissuance_blinding(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_reissuance_blinding(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_reissuance_entropy"]
-    pub fn current_reissuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_reissuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_script_hash"]
+    pub fn bitcoin_current_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_script_hash"]
-    pub fn current_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_script_sig_hash"]
+    pub fn bitcoin_current_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_script_sig_hash"]
-    pub fn current_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_sequence"]
+    pub fn bitcoin_current_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_current_sequence"]
-    pub fn current_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn current_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_current_value"]
+    pub fn bitcoin_current_value(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_decompress"]
     pub fn decompress(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_decrement_16"]
@@ -180,6 +212,8 @@ extern "C" {
     pub fn fe_square(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_fe_square_root"]
     pub fn fe_square_root(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_fee"]
+    pub fn bitcoin_fee(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_full_add_16"]
     pub fn full_add_16(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_full_add_32"]
@@ -327,7 +361,7 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_generate"]
     pub fn generate(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_genesis_block_hash"]
-    pub fn genesis_block_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn genesis_block_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_hash_to_curve"]
     pub fn hash_to_curve(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_high_1"]
@@ -349,43 +383,77 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_increment_8"]
     pub fn increment_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_amount"]
-    pub fn input_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_amounts_hash"]
-    pub fn input_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_annex_hash"]
+    pub fn bitcoin_input_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_annex_hash"]
-    pub fn input_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_annex_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_annexes_hash"]
+    pub fn bitcoin_input_annexes_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_annexes_hash"]
-    pub fn input_annexes_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_annexes_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_asset"]
-    pub fn input_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_hash"]
+    pub fn bitcoin_input_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_hash"]
-    pub fn input_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_outpoints_hash"]
+    pub fn bitcoin_input_outpoints_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_outpoints_hash"]
-    pub fn input_outpoints_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_outpoints_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_pegin"]
-    pub fn input_pegin(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_pegin(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_prev_outpoint"]
+    pub fn bitcoin_input_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_prev_outpoint"]
-    pub fn input_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_prev_outpoint(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_script_hash"]
+    pub fn bitcoin_input_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_script_hash"]
-    pub fn input_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_script_sig_hash"]
+    pub fn bitcoin_input_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_script_sig_hash"]
-    pub fn input_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_script_sig_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_script_sigs_hash"]
+    pub fn bitcoin_input_script_sigs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_script_sigs_hash"]
-    pub fn input_script_sigs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_script_sigs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_scripts_hash"]
+    pub fn bitcoin_input_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_scripts_hash"]
-    pub fn input_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_sequence"]
+    pub fn bitcoin_input_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_sequence"]
-    pub fn input_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_sequence(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_sequences_hash"]
+    pub fn bitcoin_input_sequences_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_sequences_hash"]
-    pub fn input_sequences_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_sequences_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_utxo_hash"]
+    pub fn bitcoin_input_utxo_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_utxo_hash"]
-    pub fn input_utxo_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_utxo_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_utxos_hash"]
+    pub fn bitcoin_input_utxos_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_input_utxos_hash"]
-    pub fn input_utxos_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn input_utxos_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_value"]
+    pub fn bitcoin_input_value(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_input_values_hash"]
+    pub fn bitcoin_input_values_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_inputs_hash"]
+    pub fn bitcoin_inputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_inputs_hash"]
-    pub fn inputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn inputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_internal_key"]
+    pub fn bitcoin_internal_key(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_internal_key"]
-    pub fn internal_key(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn internal_key(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_is_one_16"]
     pub fn is_one_16(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_is_one_32"]
@@ -403,35 +471,35 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_is_zero_8"]
     pub fn is_zero_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance"]
-    pub fn issuance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_asset"]
-    pub fn issuance_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_asset_amount"]
-    pub fn issuance_asset_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_asset_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_asset_amounts_hash"]
-    pub fn issuance_asset_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_asset_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_asset_proof"]
-    pub fn issuance_asset_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_asset_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_blinding_entropy_hash"]
-    pub fn issuance_blinding_entropy_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_blinding_entropy_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_entropy"]
-    pub fn issuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_hash"]
-    pub fn issuance_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_range_proofs_hash"]
-    pub fn issuance_range_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_range_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_token"]
-    pub fn issuance_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_token(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_token_amount"]
-    pub fn issuance_token_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_token_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_token_amounts_hash"]
-    pub fn issuance_token_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_token_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuance_token_proof"]
-    pub fn issuance_token_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuance_token_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_issuances_hash"]
-    pub fn issuances_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn issuances_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_lbtc_asset"]
-    pub fn lbtc_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn lbtc_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_le_16"]
     pub fn le_16(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_le_32"]
@@ -564,8 +632,10 @@ extern "C" {
     pub fn linear_combination_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_linear_verify_1"]
     pub fn linear_verify_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_lock_time"]
+    pub fn bitcoin_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_lock_time"]
-    pub fn lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_low_1"]
     pub fn low_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_low_16"]
@@ -643,13 +713,17 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_negate_8"]
     pub fn negate_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_new_issuance_contract"]
-    pub fn new_issuance_contract(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn new_issuance_contract(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_nonce_hash"]
-    pub fn nonce_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn nonce_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_num_inputs"]
+    pub fn bitcoin_num_inputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_num_inputs"]
-    pub fn num_inputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn num_inputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_num_outputs"]
+    pub fn bitcoin_num_outputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_num_outputs"]
-    pub fn num_outputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn num_outputs(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_one_16"]
     pub fn one_16(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_one_32"]
@@ -668,38 +742,52 @@ extern "C" {
     pub fn or_64(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_or_8"]
     pub fn or_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_outpoint_hash"]
+    pub fn bitcoin_outpoint_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_outpoint_hash"]
-    pub fn outpoint_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn outpoint_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_amount"]
-    pub fn output_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_amount(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_amounts_hash"]
-    pub fn output_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_amounts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_asset"]
-    pub fn output_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_asset(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_output_hash"]
+    pub fn bitcoin_output_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_hash"]
-    pub fn output_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_is_fee"]
-    pub fn output_is_fee(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_is_fee(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_nonce"]
-    pub fn output_nonce(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_nonce(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_nonces_hash"]
-    pub fn output_nonces_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_nonces_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_null_datum"]
-    pub fn output_null_datum(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_null_datum(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_range_proof"]
-    pub fn output_range_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_range_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_range_proofs_hash"]
-    pub fn output_range_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_range_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_output_script_hash"]
+    pub fn bitcoin_output_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_script_hash"]
-    pub fn output_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_script_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_output_scripts_hash"]
+    pub fn bitcoin_output_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_scripts_hash"]
-    pub fn output_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_scripts_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_surjection_proof"]
-    pub fn output_surjection_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_surjection_proof(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_output_surjection_proofs_hash"]
-    pub fn output_surjection_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn output_surjection_proofs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_output_value"]
+    pub fn bitcoin_output_value(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_output_values_hash"]
+    pub fn bitcoin_output_values_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_outputs_hash"]
+    pub fn bitcoin_outputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_outputs_hash"]
-    pub fn outputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn outputs_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_parse_lock"]
     pub fn parse_lock(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_parse_sequence"]
@@ -707,9 +795,9 @@ extern "C" {
     #[link_name = "rustsimplicity_0_6_c_point_verify_1"]
     pub fn point_verify_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_reissuance_blinding"]
-    pub fn reissuance_blinding(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn reissuance_blinding(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_reissuance_entropy"]
-    pub fn reissuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn reissuance_entropy(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_right_extend_16_32"]
     pub fn right_extend_16_32(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_right_extend_16_64"]
@@ -840,8 +928,10 @@ extern "C" {
     pub fn scalar_square(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_scale"]
     pub fn scale(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_script_cmr"]
+    pub fn bitcoin_script_cmr(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_script_cmr"]
-    pub fn script_cmr(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn script_cmr(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_sha_256_block"]
     pub fn sha_256_block(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_sha_256_ctx_8_add_1"]
@@ -872,8 +962,10 @@ extern "C" {
     pub fn sha_256_ctx_8_init(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_sha_256_iv"]
     pub fn sha_256_iv(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_sig_all_hash"]
+    pub fn bitcoin_sig_all_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_sig_all_hash"]
-    pub fn sig_all_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn sig_all_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_some_1"]
     pub fn some_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_some_16"]
@@ -894,38 +986,68 @@ extern "C" {
     pub fn subtract_8(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_swu"]
     pub fn swu(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tap_env_hash"]
+    pub fn bitcoin_tap_env_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tap_env_hash"]
-    pub fn tap_env_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tap_env_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tapdata_init"]
     pub fn tapdata_init(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tapleaf_hash"]
+    pub fn bitcoin_tapleaf_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tapleaf_hash"]
-    pub fn tapleaf_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tapleaf_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tapleaf_version"]
+    pub fn bitcoin_tapleaf_version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tapleaf_version"]
-    pub fn tapleaf_version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tapleaf_version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tappath"]
+    pub fn bitcoin_tappath(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tappath"]
-    pub fn tappath(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tappath(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tappath_hash"]
+    pub fn bitcoin_tappath_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tappath_hash"]
-    pub fn tappath_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tappath_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_total_fee"]
-    pub fn total_fee(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn total_fee(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_total_input_value"]
+    pub fn bitcoin_total_input_value(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_total_output_value"]
+    pub fn bitcoin_total_output_value(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_transaction_id"]
+    pub fn bitcoin_transaction_id(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_transaction_id"]
-    pub fn transaction_id(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn transaction_id(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_hash"]
+    pub fn bitcoin_tx_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_hash"]
-    pub fn tx_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_hash(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_is_final"]
+    pub fn bitcoin_tx_is_final(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_is_final"]
-    pub fn tx_is_final(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_is_final(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_lock_distance"]
+    pub fn bitcoin_tx_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_lock_distance"]
-    pub fn tx_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_lock_distance(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_lock_duration"]
+    pub fn bitcoin_tx_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_lock_duration"]
-    pub fn tx_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_lock_duration(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_lock_height"]
+    pub fn bitcoin_tx_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_lock_height"]
-    pub fn tx_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_lock_height(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_tx_lock_time"]
+    pub fn bitcoin_tx_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_tx_lock_time"]
-    pub fn tx_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn tx_lock_time(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_verify"]
     pub fn verify(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
+    #[link_name = "rustsimplicity_0_6_c_bitcoin_version"]
+    pub fn bitcoin_version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const bitcoin::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_version"]
-    pub fn version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const CElementsTxEnv) -> bool;
+    pub fn version(dst: *mut CFrameItem, src: *const CFrameItem, env: *const elements::CTxEnv) -> bool;
     #[link_name = "rustsimplicity_0_6_c_xor_1"]
     pub fn xor_1(dst: *mut CFrameItem, src: *const CFrameItem, env: *const c_void) -> bool;
     #[link_name = "rustsimplicity_0_6_c_xor_16"]

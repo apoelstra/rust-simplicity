@@ -12,7 +12,7 @@ pub mod frame_ffi;
 #[rustfmt::skip] pub mod jets_ffi;
 #[rustfmt::skip] pub mod jets_wrapper;
 
-pub use c_env::elements;
+pub use c_env::{bitcoin, elements};
 pub use c_frame::{byte_width, uword_width};
 pub use frame_ffi::CFrameItem;
 

@@ -117,7 +117,7 @@ extern "C" {
     pub static c_sizeof_rawTransaction: c_size_t;
     #[link_name = "rustsimplicity_0_6_c_sizeof_rawElementsTapEnv"]
     pub static c_sizeof_rawTapEnv: c_size_t;
-    #[link_name = "rustsimplicity_0_6_c_sizeof_txEnv"]
+    #[link_name = "rustsimplicity_0_6_c_sizeof_elementsTxEnv"]
     pub static c_sizeof_txEnv: c_size_t;
 
     #[link_name = "rustsimplicity_0_6_c_alignof_rawElementsBuffer"]
@@ -130,10 +130,10 @@ extern "C" {
     pub static c_alignof_rawTransaction: c_size_t;
     #[link_name = "rustsimplicity_0_6_c_alignof_rawElementsTapEnv"]
     pub static c_alignof_rawTapEnv: c_size_t;
-    #[link_name = "rustsimplicity_0_6_c_alignof_txEnv"]
+    #[link_name = "rustsimplicity_0_6_c_alignof_elementsTxEnv"]
     pub static c_alignof_txEnv: c_size_t;
 
-    #[link_name = "rustsimplicity_0_6_c_set_txEnv"]
+    #[link_name = "rustsimplicity_0_6_c_elements_set_txEnv"]
     pub fn c_set_txEnv(
         result: *mut CTxEnv,
         tx: *const CTransaction,

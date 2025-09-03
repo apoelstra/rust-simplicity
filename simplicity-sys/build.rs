@@ -58,6 +58,7 @@ fn main() {
         .into_iter()
         .map(|x| simplicity_path.join(x)),
     );
+    bitcoin_files.push("depend/bitcoin_env.c".into());
 
     // 3E. Elements base files.
     elements_files.extend(
@@ -70,6 +71,7 @@ fn main() {
         .into_iter()
         .map(|x| simplicity_path.join(x)),
     );
+    elements_files.push("depend/elements_env.c".into());
 
     if cfg!(feature = "test-utils") {
         // 4B. Bitcoin base files.
@@ -102,7 +104,6 @@ fn main() {
         .flag_if_supported("-fno-inline-functions")
         .opt_level(2)
         .file(Path::new("depend/wrapper.c"))
-        .file(Path::new("depend/env.c"))
         .file(Path::new("depend/jets_wrapper.c"))
         .include(simplicity_path.join("include"));
 

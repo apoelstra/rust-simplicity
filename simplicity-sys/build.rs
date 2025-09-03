@@ -7,55 +7,104 @@ fn main() {
     // rerun if changes to the C code
     println!("cargo:rerun-if-changed=depend");
     let simplicity_path = Path::new("depend/simplicity");
-    let jet_files: Vec<_> = vec![
-        "frame.c",
-        "jets.c",
-        "jets-secp256k1.c",
-        "rsort.c",
-        "sha256.c",
-        "elements/env.c",
-        "elements/ops.c",
-        "elements/elementsJets.c",
-        "elements/txEnv.c",
-    ]
-    .into_iter()
-    .map(|x| simplicity_path.join(x))
-    .collect();
 
+    let mut files = vec![];
+
+    // 1. Base files.
+    files.extend(
+        [
+            "frame.c",
+            "jets.c",
+            "jets-secp256k1.c",
+            "rsort.c",
+            "sha256.c",
+        ]
+        .into_iter()
+        .map(|x| simplicity_path.join(x)),
+    );
+    // 2. Test files.
+    if cfg!(feature = "test-utils") {
+        files.extend(
+            [
+                "bitstream.c",
+                "dag.c",
+                "deserialize.c",
+                "eval.c",
+                "type.c",
+                "typeInference.c",
+                "ctx8Pruned.c",
+                "ctx8Unpruned.c",
+                "hashBlock.c",
+                "schnorr0.c",
+                "schnorr6.c",
+            ]
+            .into_iter()
+            .map(|x| simplicity_path.join(x)),
+        );
+    }
+
+    // Split into Bitcoin and Elements.
+    let mut elements_files = files.clone();
+    let mut bitcoin_files = files;
+
+    // 3B. Bitcoin base files.
+    bitcoin_files.extend(
+        [
+            "bitcoin/env.c",
+            "bitcoin/ops.c",
+            "bitcoin/bitcoinJets.c",
+            "bitcoin/txEnv.c",
+        ]
+        .into_iter()
+        .map(|x| simplicity_path.join(x)),
+    );
+
+    // 3E. Elements base files.
+    elements_files.extend(
+        [
+            "elements/env.c",
+            "elements/ops.c",
+            "elements/elementsJets.c",
+            "elements/txEnv.c",
+        ]
+        .into_iter()
+        .map(|x| simplicity_path.join(x)),
+    );
+
+    if cfg!(feature = "test-utils") {
+        // 4B. Bitcoin base files.
+        bitcoin_files.extend(
+            [
+                "bitcoin/exec.c",
+                "bitcoin/primitive.c",
+                "bitcoin/checkSigHashAllTx1.c",
+            ]
+            .into_iter()
+            .map(|x| simplicity_path.join(x)),
+        );
+
+        // 4E. Elements base files.
+        elements_files.extend(
+            [
+                "elements/exec.c",
+                "elements/primitive.c",
+                "elements/checkSigHashAllTx1.c",
+            ]
+            .into_iter()
+            .map(|x| simplicity_path.join(x)),
+        );
+    }
+
+    // General build
     let mut build = cc::Build::new();
     build
         .std("c11")
         .flag_if_supported("-fno-inline-functions")
         .opt_level(2)
-        .files(jet_files)
         .file(Path::new("depend/wrapper.c"))
         .file(Path::new("depend/env.c"))
         .file(Path::new("depend/jets_wrapper.c"))
         .include(simplicity_path.join("include"));
-
-    if cfg!(feature = "test-utils") {
-        let test_files: Vec<_> = vec![
-            "bitstream.c",
-            "dag.c",
-            "deserialize.c",
-            "eval.c",
-            "type.c",
-            "typeInference.c",
-            "elements/exec.c",
-            "elements/primitive.c",
-            "ctx8Pruned.c",
-            "ctx8Unpruned.c",
-            "hashBlock.c",
-            "schnorr0.c",
-            "schnorr6.c",
-            "elements/checkSigHashAllTx1.c",
-        ]
-        .into_iter()
-        .map(|x| simplicity_path.join(x))
-        .collect();
-
-        build.files(test_files);
-    }
 
     if cfg!(not(fuzzing)) {
         build.define("PRODUCTION", None);
@@ -66,5 +115,14 @@ fn main() {
         build.include("wasm-sysroot");
     }
 
-    build.compile("ElementsSimplicity");
+    let mut _bitcoin_build = build.clone();
+    let mut elements_build = build;
+
+    // Bitcoin build
+    // TODO
+
+    // Elements build
+    elements_build
+        .files(elements_files)
+        .compile("ElementsSimplicity");
 }

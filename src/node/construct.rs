@@ -5,6 +5,7 @@ use crate::jet::Jet;
 use crate::types::{self, arrow::Arrow};
 use crate::{encode, BitIter, BitWriter, Cmr, FailEntropy, FinalizeError, RedeemNode, Value, Word};
 
+use core::borrow::Borrow;
 use std::io;
 use std::marker::PhantomData;
 use std::sync::Arc;
@@ -212,9 +213,9 @@ impl<'brand, J: Jet> ConstructNode<'brand, J> {
     /// ## See
     ///
     /// [`RedeemNode::prune`]
-    pub fn finalize_pruned(
+    pub fn finalize_pruned<T: Borrow<J::Transaction>>(
         &self,
-        env: &J::Environment,
+        env: &J::Environment<T>,
     ) -> Result<Arc<RedeemNode<J>>, FinalizeError> {
         let unpruned = self.finalize_unpruned()?;
         unpruned.prune(env).map_err(FinalizeError::Execution)

@@ -227,13 +227,14 @@ mod tests {
     use crate::jet::{Core, Jet};
     use crate::types;
     use crate::{BitMachine, Value};
+    use core::borrow::Borrow;
     use std::collections::HashMap;
     use std::sync::Arc;
 
-    fn assert_finalize_ok<J: Jet>(
+    fn assert_finalize_ok<J: Jet, T: Borrow<J::Transaction>>(
         s: &str,
         witness: &HashMap<Arc<str>, Value>,
-        env: &J::Environment,
+        env: &J::Environment<T>,
     ) {
         types::Context::with_context(|ctx| {
             let program = Forest::<J>::parse(s)
@@ -247,10 +248,10 @@ mod tests {
         });
     }
 
-    fn assert_finalize_err<J: Jet>(
+    fn assert_finalize_err<J: Jet, T: Borrow<J::Transaction>>(
         s: &str,
         witness: &HashMap<Arc<str>, Value>,
-        env: &J::Environment,
+        env: &J::Environment<T>,
         err_msg: &'static str,
     ) {
         types::Context::with_context(|ctx| {
@@ -290,19 +291,19 @@ mod tests {
             (Arc::from("a"), Value::u8(0x00)),
             (Arc::from("b"), Value::u8(0x01)),
         ]);
-        assert_finalize_ok::<Core>(s, &a_less_than_b, &());
+        assert_finalize_ok::<Core, _>(s, &a_less_than_b, &crate::jet::CoreEnv::EMPTY);
 
         let b_greater_equal_a = HashMap::from([
             (Arc::from("a"), Value::u8(0x01)),
             (Arc::from("b"), Value::u8(0x01)),
         ]);
-        assert_finalize_err::<Core>(s, &b_greater_equal_a, &(), "Jet failed during execution");
+        assert_finalize_err::<Core, _>(s, &b_greater_equal_a, &crate::jet::CoreEnv::EMPTY, "Jet failed during execution");
     }
 
     #[test]
     fn executed_witness_without_value() {
         let witness = HashMap::from([(Arc::from("wit1"), Value::u32(1337))]);
-        assert_finalize_err::<Core>(
+        assert_finalize_err::<Core, _>(
             "
                 wit1 := witness : 1 -> 2^32
                 wit2 := witness : 1 -> 2^32
@@ -311,7 +312,7 @@ mod tests {
                 main := comp wits_are_equal jet_verify            : 1 -> 1
             ",
             &witness,
-            &(),
+            &crate::jet::CoreEnv::EMPTY,
             "Jet failed during execution",
         );
     }
@@ -326,42 +327,42 @@ mod tests {
             main := comp input comp process jet_verify : 1 -> 1
         ";
         let wit2_is_pruned = HashMap::from([(Arc::from("wit1"), Value::u1(0))]);
-        assert_finalize_ok::<Core>(s, &wit2_is_pruned, &());
+        assert_finalize_ok::<Core, _>(s, &wit2_is_pruned, &crate::jet::CoreEnv::EMPTY);
 
         let wit2_is_missing = HashMap::from([(Arc::from("wit1"), Value::u1(1))]);
-        assert_finalize_err::<Core>(s, &wit2_is_missing, &(), "Jet failed during execution");
+        assert_finalize_err::<Core, _>(s, &wit2_is_missing, &crate::jet::CoreEnv::EMPTY, "Jet failed during execution");
 
         let wit2_is_present = HashMap::from([
             (Arc::from("wit1"), Value::u1(1)),
             (Arc::from("wit2"), Value::u64(u64::MAX)),
         ]);
-        assert_finalize_ok::<Core>(s, &wit2_is_present, &());
+        assert_finalize_ok::<Core, _>(s, &wit2_is_present, &crate::jet::CoreEnv::EMPTY);
     }
 
     #[test]
     fn executed_hole_with_value() {
         let empty = HashMap::new();
-        assert_finalize_ok::<Core>(
+        assert_finalize_ok::<Core, _>(
             "
                 id1 := iden : 2^256 * 1 -> 2^256 * 1
                 main := comp (disconnect id1 ?hole) unit
                 hole := unit
             ",
             &empty,
-            &(),
+            &crate::jet::CoreEnv::EMPTY,
         );
     }
 
     #[test]
     fn executed_hole_without_value() {
         let empty = HashMap::new();
-        assert_finalize_err::<Core>(
+        assert_finalize_err::<Core, _>(
             "
                 wit1 := witness
                 main := comp wit1 comp disconnect iden ?dis2 unit
             ",
             &empty,
-            &(),
+            &crate::jet::CoreEnv::EMPTY,
             "disconnect node had one child (redeem time); must have two",
         );
     }
@@ -374,9 +375,9 @@ mod tests {
             main := comp wit2 jet_verify : 1 -> 1
         ";
         let wit1_populated = HashMap::from([(Arc::from("wit1"), Value::u1(1))]);
-        assert_finalize_err::<Core>(s, &wit1_populated, &(), "Jet failed during execution");
+        assert_finalize_err::<Core, _>(s, &wit1_populated, &crate::jet::CoreEnv::EMPTY, "Jet failed during execution");
 
         let wit2_populated = HashMap::from([(Arc::from("wit2"), Value::u1(1))]);
-        assert_finalize_ok::<Core>(s, &wit2_populated, &());
+        assert_finalize_ok::<Core, _>(s, &wit2_populated, &crate::jet::CoreEnv::EMPTY);
     }
 }

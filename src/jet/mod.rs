@@ -14,11 +14,13 @@
 
 #[cfg(feature = "bitcoin")]
 pub mod bitcoin;
+mod core;
 #[cfg(feature = "elements")]
 pub mod elements;
 mod init;
 pub mod type_name;
 
+pub use self::core::CoreEnv;
 #[cfg(feature = "bitcoin")]
 pub use init::bitcoin::Bitcoin;
 pub use init::core::Core;
@@ -31,6 +33,7 @@ use crate::decode;
 use crate::jet::type_name::TypeName;
 use crate::merkle::cmr::Cmr;
 use crate::{BitIter, BitWriter};
+use std::borrow::Borrow;
 use std::hash::Hash;
 use std::io::Write;
 
@@ -59,8 +62,9 @@ impl std::error::Error for JetFailed {}
 pub trait Jet:
     Copy + Eq + Ord + Hash + std::fmt::Debug + std::fmt::Display + std::str::FromStr + 'static
 {
+    type Transaction;
     /// Environment for jet to read from
-    type Environment;
+    type Environment<T> where T: Borrow<Self::Transaction>;
     /// CJetEnvironment to interact with C FFI.
     type CJetEnvironment;
 
@@ -80,7 +84,8 @@ pub trait Jet:
     fn decode<I: Iterator<Item = u8>>(bits: &mut BitIter<I>) -> Result<Self, decode::Error>;
 
     /// Obtains a C FFI compatible environment for the jet.
-    fn c_jet_env(env: &Self::Environment) -> &Self::CJetEnvironment;
+    fn c_jet_env<T>(env: &Self::Environment<T>) -> &Self::CJetEnvironment
+        where T: Borrow<Self::Transaction>;
 
     /// Obtain the FFI C pointer for the jet.
     fn c_jet_ptr(&self) -> &dyn Fn(&mut CFrameItem, CFrameItem, &Self::CJetEnvironment) -> bool;
@@ -91,7 +96,7 @@ pub trait Jet:
 
 #[cfg(test)]
 mod tests {
-    use crate::jet::Core;
+    use crate::jet::{Core, CoreEnv};
     use crate::node::{ConstructNode, CoreConstructible, JetConstructible};
     use crate::types;
     use crate::value::Word;
@@ -111,7 +116,7 @@ mod tests {
             )
             .unwrap();
             assert_eq!(
-                BitMachine::test_exec(two_words, &()).expect("executing"),
+                BitMachine::test_exec(two_words, &CoreEnv::EMPTY).expect("executing"),
                 Value::product(
                     Value::u1(0),       // carry bit
                     Value::u32(2 + 16), // result
@@ -129,7 +134,7 @@ mod tests {
             )
             .unwrap();
             assert_eq!(
-                BitMachine::test_exec(two_words, &()).expect("executing"),
+                BitMachine::test_exec(two_words, &CoreEnv::EMPTY).expect("executing"),
                 Value::product(Value::u32(2), Value::u16(16)),
             );
         });

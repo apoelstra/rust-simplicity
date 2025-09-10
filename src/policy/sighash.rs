@@ -81,7 +81,7 @@ impl<T: Deref<Target = elements::Transaction> + Clone> SighashCache<T> {
             .collect();
 
         let simplicity_env = crate::jet::elements::ElementsEnv::new(
-            self.tx.clone(),
+            (*self.tx).borrow(),
             utxos,
             input_index as u32,
             script_cmr,

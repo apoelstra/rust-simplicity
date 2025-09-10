@@ -565,7 +565,7 @@ mod tests {
             // Execute the program to confirm that it worked
             let mut mac =
                 BitMachine::for_program(&diff1_final).expect("program has reasonable bounds");
-            mac.exec(&diff1_final, &()).unwrap();
+            mac.exec(&diff1_final, &crate::jet::CoreEnv::EMPTY).unwrap();
         }
     }
 

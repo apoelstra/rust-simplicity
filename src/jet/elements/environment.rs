@@ -4,7 +4,7 @@ use crate::merkle::cmr::Cmr;
 use elements::confidential;
 use elements::taproot::ControlBlock;
 use simplicity_sys::c_jets::c_env::elements as c_elements;
-use std::ops::Deref;
+use std::borrow::Borrow;
 
 use super::c_env;
 
@@ -37,7 +37,7 @@ impl From<elements::TxOut> for ElementsUtxo {
 /// The order of `utxos` must be same as of the order of inputs in the
 /// transaction.
 #[derive(Debug)]
-pub struct ElementsEnv<T: Deref<Target = elements::Transaction>> {
+pub struct ElementsEnv<T: Borrow<elements::Transaction>> {
     /// The CTxEnv struct
     c_tx_env: c_elements::CTxEnv,
     /// The elements transaction
@@ -54,7 +54,7 @@ pub struct ElementsEnv<T: Deref<Target = elements::Transaction>> {
 
 impl<T> ElementsEnv<T>
 where
-    T: Deref<Target = elements::Transaction>,
+    T: Borrow<elements::Transaction>,
 {
     pub fn new(
         tx: T,
@@ -65,7 +65,7 @@ where
         annex: Option<Vec<u8>>,
         genesis_hash: elements::BlockHash,
     ) -> Self {
-        let c_tx = c_env::new_tx(&tx, &utxos);
+        let c_tx = c_env::new_tx(tx.borrow(), &utxos);
         let c_tap_env = c_env::new_tap_env(&control_block, script_cmr);
         let c_tx_env = c_env::new_tx_env(c_tx, c_tap_env, genesis_hash, ix);
         ElementsEnv {
@@ -85,7 +85,7 @@ where
 
     /// Returns the transaction of this environment
     pub fn tx(&self) -> &elements::Transaction {
-        &self.tx
+        self.tx.borrow()
     }
 
     /// Returns the input index of this environment

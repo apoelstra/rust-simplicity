@@ -13,6 +13,7 @@ use super::{
     Converter, Hide, Inner, Marker, NoDisconnect, NoWitness, Node,
 };
 
+use core::borrow::Borrow;
 use std::collections::HashSet;
 use std::io;
 use std::marker::PhantomData;
@@ -289,7 +290,10 @@ impl<J: Jet> RedeemNode<J> {
     /// Pruning fails if the original, unpruned program fails to run on the Bit Machine (step 1).
     /// In this case, the witness data needs to be revised.
     /// The other pruning steps (2 & 3) never fail.
-    pub fn prune(&self, env: &J::Environment) -> Result<Arc<RedeemNode<J>>, ExecutionError> {
+    pub fn prune<T>(&self, env: &J::Environment<T>) -> Result<Arc<RedeemNode<J>>, ExecutionError>
+    where
+        T: Borrow<J::Transaction>,
+    {
         struct Pruner<'brand, J> {
             inference_context: types::Context<'brand>,
             tracker: SetTracker,
@@ -946,12 +950,12 @@ mod tests {
     }
 
     #[cfg(feature = "elements")]
-    fn assert_correct_pruning<J: Jet>(
+    fn assert_correct_pruning<J: Jet, T: Borrow<J::Transaction>>(
         unpruned_prog: &str,
         unpruned_wit: &HashMap<Arc<str>, Value>,
         expected_pruned_prog: &str,
         expected_pruned_wit: &HashMap<Arc<str>, Value>,
-        env: &J::Environment,
+        env: &J::Environment<T>,
     ) {
         let unpruned_program = types::Context::with_context(|ctx| {
             Forest::<J>::parse(unpruned_prog)
@@ -1030,7 +1034,7 @@ main := comp input comp process jet_verify : 1 -> 1"#;
                 Value::product(Value::u64(0), Value::unit()),
             ),
         ]);
-        assert_correct_pruning::<crate::jet::Elements>(
+        assert_correct_pruning::<crate::jet::Elements, _>(
             unpruned_prog,
             &unpruned_wit,
             pruned_prog,
@@ -1058,7 +1062,7 @@ main := comp input comp process jet_verify : 1 -> 1"#;
                 Value::product(Value::unit(), Value::u64(0)),
             ),
         ]);
-        assert_correct_pruning::<crate::jet::Elements>(
+        assert_correct_pruning::<crate::jet::Elements, _>(
             unpruned_prog,
             &unpruned_wit,
             pruned_prog,
@@ -1083,7 +1087,7 @@ process := assertl (take jet_is_zero_64) #{take jet_is_zero_64} : (2^64 + 1) * 1
 main := comp input comp process jet_verify : 1 -> 1"#;
         let pruned_wit =
             HashMap::from([(Arc::from("wit1"), Value::left(Value::u64(0), Final::unit()))]);
-        assert_correct_pruning::<crate::jet::Elements>(
+        assert_correct_pruning::<crate::jet::Elements, _>(
             prune_sum,
             &unpruned_wit,
             pruned_prog,
@@ -1104,7 +1108,7 @@ main := comp input comp process jet_verify : 1 -> 1"#;
             Arc::from("wit1"),
             Value::right(Final::unit(), Value::u64(0)),
         )]);
-        assert_correct_pruning::<crate::jet::Elements>(
+        assert_correct_pruning::<crate::jet::Elements, _>(
             prune_sum,
             &unpruned_wit,
             pruned_prog,

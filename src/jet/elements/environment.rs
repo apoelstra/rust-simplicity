@@ -110,7 +110,7 @@ where
 }
 
 #[cfg(test)]
-impl ElementsEnv<std::sync::Arc<elements::Transaction>> {
+impl ElementsEnv<elements::Transaction> {
     /// Return a dummy Elements environment
     pub fn dummy() -> Self {
         Self::dummy_with(elements::LockTime::ZERO, elements::Sequence::MAX)
@@ -128,7 +128,7 @@ impl ElementsEnv<std::sync::Arc<elements::Transaction>> {
         ];
 
         ElementsEnv::new(
-            std::sync::Arc::new(elements::Transaction {
+            elements::Transaction {
                 version: 2,
                 lock_time,
                 // Enable locktime in dummy txin
@@ -141,7 +141,7 @@ impl ElementsEnv<std::sync::Arc<elements::Transaction>> {
                     witness: elements::TxInWitness::default(),
                 }],
                 output: Vec::default(),
-            }),
+            },
             vec![ElementsUtxo {
                 script_pubkey: elements::Script::new(),
                 asset: confidential::Asset::Null,

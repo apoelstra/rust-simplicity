@@ -13,6 +13,7 @@ use elements::taproot::TapLeafHash;
 use hashes::Hash;
 
 use crate::jet::elements::ElementsEnv;
+use core::borrow::Borrow;
 use std::convert::TryFrom;
 use std::sync::Arc;
 
@@ -274,7 +275,7 @@ impl<Pk: ToXOnlyPubkey> Policy<Pk> {
     pub fn satisfy<'brand, S: Satisfier<'brand, Pk>>(
         &self,
         satisfier: &S,
-        env: &ElementsEnv<Arc<elements::Transaction>>,
+        env: &ElementsEnv<impl Borrow<elements::Transaction>>,
     ) -> Result<Arc<RedeemNode<Elements>>, SatisfierError> {
         let result = self.satisfy_internal(satisfier)?;
         match result.get_node() {
@@ -346,7 +347,7 @@ mod tests {
     fn get_satisfier<'tx, 'brand>(
         context: types::Context<'brand>,
 
-        env: &'tx ElementsEnv<Arc<elements::Transaction>>,
+        env: &'tx ElementsEnv<impl Borrow<elements::Transaction>>,
     ) -> PolicySatisfier<'tx, 'brand, XOnlyPublicKey> {
         let mut preimages = HashMap::new();
 
@@ -385,7 +386,7 @@ mod tests {
 
     fn execute_successful(
         program: Arc<RedeemNode<Elements>>,
-        env: &ElementsEnv<Arc<elements::Transaction>>,
+        env: &ElementsEnv<impl Borrow<elements::Transaction>>,
     ) {
         let mut mac = BitMachine::for_program(&program).unwrap();
         assert!(mac.exec(&program, env).is_ok());
@@ -393,7 +394,7 @@ mod tests {
 
     fn execute_unsuccessful(
         program: Arc<RedeemNode<Elements>>,
-        env: &ElementsEnv<Arc<elements::Transaction>>,
+        env: &ElementsEnv<impl Borrow<elements::Transaction>>,
     ) {
         let mut mac = BitMachine::for_program(&program).unwrap();
         assert!(mac.exec(&program, env).is_err());

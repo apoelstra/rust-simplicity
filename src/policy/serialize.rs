@@ -285,7 +285,7 @@ mod tests {
         policy: Policy<XOnlyPublicKey>,
     ) -> (
         Arc<CommitNode<Elements>>,
-        ElementsEnv<Arc<elements::Transaction>>,
+        ElementsEnv<impl core::borrow::Borrow<elements::Transaction>>,
     ) {
         let commit = policy.commit().expect("no asm");
         let env = ElementsEnv::dummy();
@@ -296,7 +296,7 @@ mod tests {
     fn execute_successful(
         commit: &CommitNode<Elements>,
         witness: Vec<Value>,
-        env: &ElementsEnv<Arc<elements::Transaction>>,
+        env: &ElementsEnv<impl core::borrow::Borrow<elements::Transaction>>,
     ) -> bool {
         let finalized = commit
             .finalize(&mut SimpleFinalizer::new(witness.into_iter()))

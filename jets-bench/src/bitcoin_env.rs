@@ -13,6 +13,8 @@ pub struct EnvSampling {
     n_in: usize,
     /// Number of outputs in the transaction
     n_out: usize,
+    /// Whether to force the transaction to have an annex
+    force_annex: bool,
 }
 
 impl EnvSampling {
@@ -25,6 +27,7 @@ impl EnvSampling {
         EnvSampling {
             n_in: 0,
             n_out: 0,
+            force_annex: false,
         }
     }
 
@@ -36,6 +39,11 @@ impl EnvSampling {
     /// Attach a number of inputs to the environment
     pub fn n_outputs(self, n_out: usize) -> Self {
         EnvSampling { n_out, ..self }
+    }
+
+    /// Force the transaction to have an annex.
+    pub fn with_annex(self) -> Self {
+        EnvSampling { force_annex: true, ..self }
     }
 
     /// Obtain a random environment from the sampler.
@@ -50,7 +58,7 @@ impl EnvSampling {
 
         // Add inputs
         for _ in 0..self.n_in {
-            let (txin, spent_utxo) = random_input();
+            let (txin, spent_utxo) = random_input(self.force_annex);
             tx.input.push(txin);
             utxos.push(spent_utxo);
         }
@@ -92,7 +100,7 @@ fn random_output() -> TxOut {
     }
 }
 
-fn random_input() -> (TxIn, TxOut) {
+fn random_input(force_annex: bool) -> (TxIn, TxOut) {
     let txout = random_output();
     let tx_bytes = rand::random::<[u8; 32]>();
     let vout = rand::random::<u16>() as u32;
@@ -101,7 +109,7 @@ fn random_input() -> (TxIn, TxOut) {
     witness.push(b"witness data");
     witness.push(b"leaf script i.e. simplicity program");
     witness.push(b"control block");
-    if rand::random() {
+    if force_annex || rand::random() {
         witness.push(b"annex");
     }
     

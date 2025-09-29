@@ -24,3 +24,7 @@ rand = "0.8"
 [[bench]]
 name = "elements"
 harness = false
+
+[[bench]]
+name = "bitcoin"
+harness = false

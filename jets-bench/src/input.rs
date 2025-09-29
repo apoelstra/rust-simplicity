@@ -1411,10 +1411,10 @@ mod tests {
 
     #[test]
     fn sample_ge_buffer() {
-        use crate::{EnvSampling, JetBuffer, JetParams};
+        use crate::{ElementsEnvSampling, JetBuffer, JetParams};
         use simplicity::jet::Jet;
 
-        let env = EnvSampling::null().env();
+        let env = ElementsEnvSampling::null().env();
         let jet = Elements::PointVerify1;
 
         let src_ty = jet.source_ty().to_final();

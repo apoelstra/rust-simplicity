@@ -14,7 +14,7 @@ use simplicity_bench::input::{
     DivMod12864Input,
 };
 use simplicity_bench::{
-    genesis_pegin, BenchSample, EnvSampling, InputSampling, JetBuffer, JetParams, SimplicityCtx8,
+    genesis_pegin, BenchSample, ElementsEnvSampling, InputSampling, JetBuffer, JetParams, SimplicityCtx8,
     SimplicityEncode,
 };
 
@@ -56,15 +56,15 @@ enum ElementsBenchEnvType {
 impl ElementsBenchEnvType {
     fn env(&self) -> ElementsEnv<Arc<elements::Transaction>> {
         let mut env_sampler = match self {
-            ElementsBenchEnvType::None => EnvSampling::null(),
+            ElementsBenchEnvType::None => ElementsEnvSampling::null(),
             ElementsBenchEnvType::Random
             | ElementsBenchEnvType::Annex
             | ElementsBenchEnvType::AllFeeOutputs => {
                 let selector = rand::random::<usize>() % 4;
-                EnvSampling::random(selector)
+                ElementsEnvSampling::random(selector)
             }
-            ElementsBenchEnvType::Issuance => EnvSampling::issuance(),
-            ElementsBenchEnvType::Pegin => EnvSampling::pegin(),
+            ElementsBenchEnvType::Issuance => ElementsEnvSampling::issuance(),
+            ElementsBenchEnvType::Pegin => ElementsEnvSampling::pegin(),
         };
         if *self == ElementsBenchEnvType::AllFeeOutputs {
             env_sampler = env_sampler.all_fee_outputs();
@@ -609,7 +609,7 @@ fn bench(c: &mut Criterion) {
         let (src_ty, tgt_ty) = jet_arrow(jet);
 
         let mut group = c.benchmark_group(jet.to_string());
-        let env = EnvSampling::null().env();
+        let env = ElementsEnvSampling::null().env();
         if is_heavy_jet(jet) {
             group.measurement_time(std::time::Duration::from_secs(5));
         };
@@ -792,7 +792,7 @@ fn bench(c: &mut Criterion) {
         jet_checker.record(jet);
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
-        let env = EnvSampling::null().env();
+        let env = ElementsEnvSampling::null().env();
 
         let mut group = c.benchmark_group(jet.to_string());
         for i in 0..NUM_RANDOM_SAMPLES {

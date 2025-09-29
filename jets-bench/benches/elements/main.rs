@@ -162,7 +162,7 @@ fn bench(c: &mut Criterion) {
     }
 
     // Initialize set of all jets
-    simplicity_bench::check_all_jets::initialize();
+    let mut jet_checker = simplicity_bench::check_all_jets::JetChecker::initialize();
 
     let mut rng = ThreadRng::default();
     let mut count = 0;
@@ -600,10 +600,10 @@ fn bench(c: &mut Criterion) {
     ];
     for (jet, sample) in arr {
         count += 1;
-        simplicity_bench::check_all_jets::record(jet);
+        jet_checker.record(jet);
         println!(
             "[{:3}/{:3}] For {} we have {} distributions",
-            count, simplicity_bench::check_all_jets::N_TOTAL, jet, sample.n_distributions(),
+            count, jet_checker.n_jets(), jet, sample.n_distributions(),
         );
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
@@ -727,7 +727,7 @@ fn bench(c: &mut Criterion) {
 
     // Elements environment jets
     for (jet, env_sampler) in jets {
-        simplicity_bench::check_all_jets::record(jet);
+        jet_checker.record(jet);
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = env_sampler.env();
@@ -789,7 +789,7 @@ fn bench(c: &mut Criterion) {
     ];
 
     for (jet, inp_fn) in arr {
-        simplicity_bench::check_all_jets::record(jet);
+        jet_checker.record(jet);
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = EnvSampling::null().env();
@@ -879,7 +879,7 @@ fn bench(c: &mut Criterion) {
     ];
 
     for (jet, index, env_type) in arr {
-        simplicity_bench::check_all_jets::record(jet);
+        jet_checker.record(jet);
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = env_type.env();
@@ -910,7 +910,7 @@ fn bench(c: &mut Criterion) {
         }
     }
 
-    simplicity_bench::check_all_jets::check_all_covered();
+    jet_checker.check_all_covered();
 }
 
 criterion_group! {

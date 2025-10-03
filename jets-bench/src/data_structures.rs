@@ -420,3 +420,24 @@ pub fn genesis_pegin() -> Value {
         Value::some(Value::u256(genesis_hash))
     }
 }
+
+impl SimplicityEncode for bitcoin::OutPoint {
+    fn value(&self) -> Value {
+        let txid = Value::u256(self.txid.to_byte_array());
+        let vout = Value::u32(self.vout);
+        Value::product(txid, vout)
+    }
+}
+
+impl BenchSample for bitcoin::OutPoint {
+    fn sample() -> Self {
+        let mut rng = rand::thread_rng();
+        let mut txid = [0u8; 32];
+        rng.fill_bytes(&mut txid);
+        let vout = rng.next_u32();
+        bitcoin::OutPoint {
+            txid: bitcoin::Txid::from_byte_array(txid),
+            vout,
+        }
+    }
+}

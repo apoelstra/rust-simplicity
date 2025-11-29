@@ -907,8 +907,8 @@ pub struct Fe;
 
 impl InputSample for Fe {
     fn n_distributions(&self) -> usize {
-        // uniform, plus an extra "out of range" distribution
-        4
+        // uniform, plus an extra "out of range" distribution, plus x-only
+        5
     }
 
     fn distribution_name(&self, dist: usize) -> String {
@@ -916,6 +916,7 @@ impl InputSample for Fe {
             // uniform and low-bit-weight
             0..=2 => format!("fe_{}", UniformBits.distribution_name(dist)),
             3 => "fe_outofrange".into(),
+            4 => "fe_validx".into(),
             x => panic!("no distribution {x} for Fe"),
         }
     }
@@ -948,6 +949,8 @@ impl InputSample for Fe {
                 rand::thread_rng().fill_bytes(&mut ret.inner[28..32]);
                 ret
             }
+            // valid X coordinates
+            4 => Ge.sample(0, 512).split_in_half().0,
             x => panic!("no distribution {x} for Fe"),
         }
     }

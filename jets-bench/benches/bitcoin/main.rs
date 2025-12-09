@@ -595,7 +595,7 @@ fn bench(c: &mut Criterion) {
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
 
-        let mut group = c.benchmark_group(jet.to_string());
+        let mut group = c.benchmark_group(format!("bitcoin_{jet}"));
         let env = BitcoinEnvSampling::null().env();
         if is_heavy_jet(jet) {
             group.measurement_time(std::time::Duration::from_secs(5));
@@ -696,7 +696,7 @@ fn bench(c: &mut Criterion) {
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = env_sampler.env();
 
-        let mut group = c.benchmark_group(jet.to_string());
+        let mut group = c.benchmark_group(format!("bitcoin_{jet}"));
         for i in 0..NUM_RANDOM_SAMPLES {
             let params = JetParams::with_rand_aligns(InputSampling::Random);
             let name = format!("{}", i);
@@ -742,7 +742,7 @@ fn bench(c: &mut Criterion) {
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = BitcoinEnvSampling::null().env();
 
-        let mut group = c.benchmark_group(jet.to_string());
+        let mut group = c.benchmark_group(format!("bitcoin_{jet}"));
         for i in 0..NUM_RANDOM_SAMPLES {
             let params = JetParams::with_rand_aligns(InputSampling::Custom(inp_fn.clone()));
             let name = format!("{}", i);
@@ -810,7 +810,7 @@ fn bench(c: &mut Criterion) {
 
         let (src_ty, tgt_ty) = jet_arrow(jet);
         let env = env_type.env();
-        let mut group = c.benchmark_group(jet.to_string());
+        let mut group = c.benchmark_group(format!("bitcoin_{jet}"));
 
         for i in 0..NUM_RANDOM_SAMPLES {
             // We always select the current input because this is where we

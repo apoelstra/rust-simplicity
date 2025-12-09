@@ -88,7 +88,7 @@ fn main() -> Result<(), String> {
         let jet_name = jet.file_name().unwrap().to_str().unwrap().to_string();
         let mut estimates = vec![];
         // Iterate over all files in jets directory
-        for jet_folder in std::fs::read_dir(&jet).unwrap().map(|e| e.unwrap().path()) {
+        for jet_folder in std::fs::read_dir(&jet).expect(&format!("reading directory {}", jet.to_string_lossy())).map(|e| e.unwrap().path()) {
             let dist_name = jet_folder.file_name().unwrap().to_string_lossy().to_string();
             // Parse the file
             // Filter all files that start with measurements
@@ -144,21 +144,49 @@ fn main() -> Result<(), String> {
     }
 
     // Haskell requires debug formatted strings.
-    let bench_results: BTreeMap<_, _> = bench_results
-        .into_iter()
-        .map(|(k, v)| {
-            let debug_str = simplicity::jet::Elements::from_str(&k).unwrap();
-            (format!("{:?}", debug_str), v)
+    let bitcoin_bench_results: BTreeMap<_, _> = bench_results
+        .iter()
+        .filter_map(|(k, v)| {
+            let jet = k.strip_prefix("bitcoin_")?;
+            let debug_str = simplicity::jet::Bitcoin::from_str(jet).unwrap();
+            Some((format!("{:?}", debug_str), v))
+        })
+        .collect();
+
+    let elements_bench_results: BTreeMap<_, _> = bench_results
+        .iter()
+        .filter_map(|(k, v)| {
+            let jet = k.strip_prefix("elements_")?;
+            let debug_str = simplicity::jet::Elements::from_str(jet).unwrap();
+            Some((format!("{:?}", debug_str), v))
         })
         .collect();
 
     // Create a file output json file with jet_bench_timestamp.json
-    let timestamp = chrono::Utc::now().format("%Y-%m-%d_%H-%M-%S");
-    let output_file = simplicity_root
-        .join("data")
-        .join(format!("jet_bench_{}.json", timestamp));
-    let mut output_file = std::fs::File::create(output_file).unwrap();
-    serde_json::to_writer_pretty(&mut output_file, &bench_results).unwrap();
+    if bitcoin_bench_results.is_empty() {
+        println!("Found no bitcoin jet results.");
+    } else {
+        let timestamp = chrono::Utc::now().format("%Y-%m-%d_%H-%M-%S");
+        let output_path = simplicity_root
+            .join("data")
+            .join(format!("bitcoin_jet_bench_{}.json", timestamp));
+        let mut output_file = std::fs::File::create(&output_path).unwrap();
+        serde_json::to_writer_pretty(&mut output_file, &bitcoin_bench_results).unwrap();
+        println!("Output Bitcoin jet results to {}", output_path.to_string_lossy());
+    }
+
+    // Create a file output json file with jet_bench_timestamp.json
+    if elements_bench_results.is_empty() {
+        println!("Found no elements jet results.");
+    } else {
+        let timestamp = chrono::Utc::now().format("%Y-%m-%d_%H-%M-%S");
+        let output_path = simplicity_root
+            .join("data")
+            .join(format!("elements_jet_bench_{}.json", timestamp));
+        let mut output_file = std::fs::File::create(&output_path).unwrap();
+        serde_json::to_writer_pretty(&mut output_file, &elements_bench_results).unwrap();
+        println!("Output Elements jet results to {}", output_path.to_string_lossy());
+    }
 
     Ok(())
 }

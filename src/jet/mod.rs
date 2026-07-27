@@ -18,6 +18,7 @@ pub mod core;
 #[cfg(feature = "elements")]
 pub mod elements;
 mod init;
+mod sha256;
 pub mod type_name;
 
 pub use self::core::CoreEnv;
@@ -31,6 +32,7 @@ pub use init::bitcoin::Bitcoin;
 pub use init::core::Core;
 #[cfg(feature = "elements")]
 pub use init::elements::Elements;
+pub use sha256::Sha256Jet;
 use simplicity_sys::c_jets::frame_ffi::CFrameItem;
 
 use crate::analysis::Cost;

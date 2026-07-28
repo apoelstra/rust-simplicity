@@ -80,6 +80,7 @@ mod display;
 mod hiding;
 mod inner;
 mod redeem;
+pub mod type_promise;
 
 use crate::value::Word;
 pub use commit::{Commit, CommitData, CommitNode};

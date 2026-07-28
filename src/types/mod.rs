@@ -268,6 +268,13 @@ impl<'brand> Type<'brand> {
         }
     }
 
+    /// Whether this type is a free type.
+    pub fn is_free(&self) -> bool {
+        let root = self.ctx.get_root_ref(&self.inner.bound);
+        let bound = self.ctx.get(&root);
+        matches!(bound, Bound::Free(_))
+    }
+
     /// Whether this type is known to be final
     ///
     /// During type inference this may be false even though the type is, in fact,

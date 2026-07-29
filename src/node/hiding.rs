@@ -114,24 +114,26 @@ impl<'brand, N: HasCmr + CoreConstructible<'brand>> Hiding<'brand, N> {
     fn zip_ref<M: CoreConstructible<'brand>>(
         &self,
         other: &Self,
-        node_zipfn: impl FnOnce(&N, &N) -> Result<M, Error>,
+        node_zipfn: impl FnOnce(&N, &N) -> M,
         cmr_zipfn: impl FnOnce(Cmr, Cmr) -> Cmr,
-    ) -> Result<Hiding<'brand, M>, Error> {
-        Ok(Hiding {
+    ) -> Hiding<'brand, M> {
+        Hiding {
             inner: match (&self.inner, &other.inner) {
                 (HidingInner::Node(ref left), HidingInner::Node(ref right)) => {
-                    node_zipfn(left, right).map(HidingInner::Node)?
+                    HidingInner::Node(node_zipfn(left, right))
                 }
                 _ => {
-                    self.inference_context()
-                        .check_eq(other.inference_context())?;
+                    // This method is called from the *_from_arrow methods, which provide an arrow
+                    // that (presumably) can't have been constructed without first checking the
+                    // childrens' type inference contexts.
+                    debug_assert_eq!(self.inference_context(), other.inference_context());
                     HidingInner::Hidden {
                         cmr: cmr_zipfn(self.cmr(), other.cmr()),
                         arrow: Arrow::hidden(self.inference_context()),
                     }
                 }
             },
-        })
+        }
     }
 
     /// Replace the node, if any, with its CMR; replace its type arrow with a new free arrow.
@@ -178,8 +180,8 @@ impl<'brand, N: HasCmr + CoreConstructible<'brand>> CoreConstructible<'brand>
         N::iden(inference_context).into()
     }
 
-    fn unit(inference_context: &Context<'brand>) -> Self {
-        N::unit(inference_context).into()
+    fn unit_from_arrow(arrow: Arrow<'brand>) -> Self {
+        N::unit_from_arrow(arrow).into()
     }
 
     fn injl(child: &Self) -> Self {
@@ -198,8 +200,12 @@ impl<'brand, N: HasCmr + CoreConstructible<'brand>> CoreConstructible<'brand>
         child.map_ref(N::drop_)
     }
 
-    fn comp(left: &Self, right: &Self) -> Result<Self, Error> {
-        left.zip_ref(right, N::comp, Cmr::comp)
+    fn comp_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        left.zip_ref(
+            right,
+            |left, right| N::comp_from_arrow(left, right, arrow),
+            Cmr::comp,
+        )
     }
 
     fn case(left: &Self, right: &Self) -> Result<Self, Error> {
@@ -228,8 +234,12 @@ impl<'brand, N: HasCmr + CoreConstructible<'brand>> CoreConstructible<'brand>
         right.map_ref_result(|right| N::assertr(left, right))
     }
 
-    fn pair(left: &Self, right: &Self) -> Result<Self, Error> {
-        left.zip_ref(right, N::pair, Cmr::pair)
+    fn pair_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        left.zip_ref(
+            right,
+            |left, right| N::pair_from_arrow(left, right, arrow),
+            Cmr::comp,
+        )
     }
 
     fn fail(inference_context: &Context<'brand>, entropy: FailEntropy) -> Self {

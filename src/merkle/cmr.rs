@@ -2,8 +2,7 @@
 
 use crate::jet::Jet;
 #[cfg(feature = "elements")]
-use crate::node::{CoreConstructible, DisconnectConstructible, WitnessConstructible};
-#[cfg(feature = "elements")]
+use crate::node::{CoreConstructible, DisconnectConstructible, NoDisconnect, WitnessConstructible};
 use crate::types::{self, Arrow, Error};
 use crate::value::Word;
 use crate::{FailEntropy, Tmr};
@@ -271,10 +270,10 @@ impl<'brand> CoreConstructible<'brand> for ConstructibleCmr<'brand> {
         }
     }
 
-    fn unit(inference_context: &types::Context<'brand>) -> Self {
+    fn unit_from_arrow(arrow: Arrow<'brand>) -> Self {
         ConstructibleCmr {
             cmr: Cmr::unit(),
-            arrow: Arrow::unit(inference_context),
+            arrow,
         }
     }
 
@@ -306,11 +305,11 @@ impl<'brand> CoreConstructible<'brand> for ConstructibleCmr<'brand> {
         }
     }
 
-    fn comp(left: &Self, right: &Self) -> Result<Self, Error> {
-        Ok(ConstructibleCmr {
+    fn comp_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        ConstructibleCmr {
             cmr: Cmr::comp(left.cmr, right.cmr),
-            arrow: Arrow::comp(left.arrow(), right.arrow())?,
-        })
+            arrow,
+        }
     }
 
     fn case(left: &Self, right: &Self) -> Result<Self, Error> {
@@ -334,11 +333,11 @@ impl<'brand> CoreConstructible<'brand> for ConstructibleCmr<'brand> {
         })
     }
 
-    fn pair(left: &Self, right: &Self) -> Result<Self, Error> {
-        Ok(ConstructibleCmr {
+    fn pair_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        ConstructibleCmr {
             cmr: Cmr::pair(left.cmr, right.cmr),
-            arrow: Arrow::pair(left.arrow(), right.arrow())?,
-        })
+            arrow,
+        }
     }
 
     fn fail(inference_context: &types::Context<'brand>, entropy: FailEntropy) -> Self {
@@ -376,14 +375,14 @@ impl<'brand, X> DisconnectConstructible<'brand, X> for ConstructibleCmr<'brand> 
     fn disconnect(left: &Self, _right: &X) -> Result<Self, Error> {
         Ok(ConstructibleCmr {
             cmr: Cmr::disconnect(left.cmr),
-            arrow: left.arrow.shallow_clone(),
+            arrow: Arrow::disconnect(&left.arrow, &NoDisconnect)?,
         })
     }
 }
 
 #[cfg(feature = "elements")] // only used by policy module
 impl<'brand, W> WitnessConstructible<'brand, W> for ConstructibleCmr<'brand> {
-    fn witness(inference_context: &types::Context<'brand>, _witness: W) -> Self {
+    fn witness(inference_context: &types::Context<'brand>, _: W) -> Self {
         ConstructibleCmr {
             arrow: Arrow::witness(inference_context),
             cmr: Cmr::witness(),

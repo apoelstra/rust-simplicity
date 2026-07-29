@@ -66,6 +66,7 @@
 use crate::dag::{DagLike, MaxSharing, SharingTracker};
 use crate::encode;
 use crate::jet::Jet;
+use crate::types::Arrow;
 use crate::{types, BitWriter, Cmr, FailEntropy, HasCmr, Value};
 
 use std::sync::Arc;
@@ -176,17 +177,35 @@ impl<'brand, X, W, T> Constructible<'brand, X, W> for T where
 }
 
 pub trait CoreConstructible<'brand>: Sized {
+    fn unit_from_arrow(arrow: Arrow<'brand>) -> Self;
+    fn comp_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self;
+    fn pair_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self;
+
     fn iden(inference_context: &types::Context<'brand>) -> Self;
-    fn unit(inference_context: &types::Context<'brand>) -> Self;
+
+    fn unit(inference_context: &types::Context<'brand>) -> Self {
+        Self::unit_from_arrow(Arrow::unit(inference_context))
+    }
+
     fn injl(child: &Self) -> Self;
     fn injr(child: &Self) -> Self;
     fn take(child: &Self) -> Self;
     fn drop_(child: &Self) -> Self;
-    fn comp(left: &Self, right: &Self) -> Result<Self, types::Error>;
+
+    fn comp(left: &Self, right: &Self) -> Result<Self, types::Error> {
+        let arrow = Arrow::comp(left.arrow(), right.arrow())?;
+        Ok(Self::comp_from_arrow(left, right, arrow))
+    }
+
     fn case(left: &Self, right: &Self) -> Result<Self, types::Error>;
     fn assertl(left: &Self, right: Cmr) -> Result<Self, types::Error>;
     fn assertr(left: Cmr, right: &Self) -> Result<Self, types::Error>;
-    fn pair(left: &Self, right: &Self) -> Result<Self, types::Error>;
+
+    fn pair(left: &Self, right: &Self) -> Result<Self, types::Error> {
+        let arrow = Arrow::pair(left.arrow(), right.arrow())?;
+        Ok(Self::pair_from_arrow(left, right, arrow))
+    }
+
     fn fail(inference_context: &types::Context<'brand>, entropy: FailEntropy) -> Self;
     fn const_word(inference_context: &types::Context<'brand>, word: Word) -> Self;
     fn jet(inference_context: &types::Context<'brand>, jet: &dyn Jet) -> Self;
@@ -442,6 +461,22 @@ where
     N: Marker,
     N::CachedData: CoreConstructible<'brand>,
 {
+    fn comp_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        Arc::new(Node {
+            cmr: Cmr::comp(left.cmr(), right.cmr()),
+            data: N::CachedData::comp_from_arrow(left.cached_data(), right.cached_data(), arrow),
+            inner: Inner::Comp(Arc::clone(left), Arc::clone(right)),
+        })
+    }
+
+    fn pair_from_arrow(left: &Self, right: &Self, arrow: Arrow<'brand>) -> Self {
+        Arc::new(Node {
+            cmr: Cmr::pair(left.cmr(), right.cmr()),
+            data: N::CachedData::pair_from_arrow(left.cached_data(), right.cached_data(), arrow),
+            inner: Inner::Pair(Arc::clone(left), Arc::clone(right)),
+        })
+    }
+
     fn iden(inference_context: &types::Context<'brand>) -> Self {
         Arc::new(Node {
             cmr: Cmr::iden(),
@@ -450,10 +485,10 @@ where
         })
     }
 
-    fn unit(inference_context: &types::Context<'brand>) -> Self {
+    fn unit_from_arrow(arrow: Arrow<'brand>) -> Self {
         Arc::new(Node {
             cmr: Cmr::unit(),
-            data: N::CachedData::unit(inference_context),
+            data: N::CachedData::unit_from_arrow(arrow),
             inner: Inner::Unit,
         })
     }
@@ -490,14 +525,6 @@ where
         })
     }
 
-    fn comp(left: &Self, right: &Self) -> Result<Self, types::Error> {
-        Ok(Arc::new(Node {
-            cmr: Cmr::comp(left.cmr(), right.cmr()),
-            data: N::CachedData::comp(&left.data, &right.data)?,
-            inner: Inner::Comp(Arc::clone(left), Arc::clone(right)),
-        }))
-    }
-
     fn case(left: &Self, right: &Self) -> Result<Self, types::Error> {
         Ok(Arc::new(Node {
             cmr: Cmr::case(left.cmr(), right.cmr()),
@@ -519,14 +546,6 @@ where
             cmr: Cmr::case(l_cmr, right.cmr()),
             data: N::CachedData::assertr(l_cmr, &right.data)?,
             inner: Inner::AssertR(l_cmr, Arc::clone(right)),
-        }))
-    }
-
-    fn pair(left: &Self, right: &Self) -> Result<Self, types::Error> {
-        Ok(Arc::new(Node {
-            cmr: Cmr::pair(left.cmr(), right.cmr()),
-            data: N::CachedData::pair(&left.data, &right.data)?,
-            inner: Inner::Pair(Arc::clone(left), Arc::clone(right)),
         }))
     }
 
@@ -554,7 +573,7 @@ where
         })
     }
 
-    fn arrow(&self) -> &types::Arrow<'brand> {
+    fn arrow(&self) -> &Arrow<'brand> {
         self.data.arrow()
     }
 }

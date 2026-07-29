@@ -282,16 +282,22 @@ impl<'brand> ConstructData<'brand> {
 }
 
 impl<'brand> CoreConstructible<'brand> for ConstructData<'brand> {
+    fn comp_from_arrow(_: &Self, _: &Self, arrow: types::Arrow<'brand>) -> Self {
+        ConstructData { arrow }
+    }
+
+    fn pair_from_arrow(_: &Self, _: &Self, arrow: types::Arrow<'brand>) -> Self {
+        ConstructData { arrow }
+    }
+
     fn iden(inference_context: &types::Context<'brand>) -> Self {
         ConstructData {
             arrow: Arrow::iden(inference_context),
         }
     }
 
-    fn unit(inference_context: &types::Context<'brand>) -> Self {
-        ConstructData {
-            arrow: Arrow::unit(inference_context),
-        }
+    fn unit_from_arrow(arrow: types::Arrow<'brand>) -> Self {
+        ConstructData { arrow }
     }
 
     fn injl(child: &Self) -> Self {
@@ -318,12 +324,6 @@ impl<'brand> CoreConstructible<'brand> for ConstructData<'brand> {
         }
     }
 
-    fn comp(left: &Self, right: &Self) -> Result<Self, types::Error> {
-        Ok(ConstructData {
-            arrow: Arrow::comp(&left.arrow, &right.arrow)?,
-        })
-    }
-
     fn case(left: &Self, right: &Self) -> Result<Self, types::Error> {
         Ok(ConstructData {
             arrow: Arrow::case(&left.arrow, &right.arrow)?,
@@ -339,12 +339,6 @@ impl<'brand> CoreConstructible<'brand> for ConstructData<'brand> {
     fn assertr(_: Cmr, right: &Self) -> Result<Self, types::Error> {
         Ok(ConstructData {
             arrow: Arrow::assertr(&right.arrow)?,
-        })
-    }
-
-    fn pair(left: &Self, right: &Self) -> Result<Self, types::Error> {
-        Ok(ConstructData {
-            arrow: Arrow::pair(&left.arrow, &right.arrow)?,
         })
     }
 
